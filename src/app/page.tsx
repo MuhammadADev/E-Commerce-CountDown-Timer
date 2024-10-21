@@ -1,45 +1,41 @@
-import { Card } from "@/components/Card";
-import Container from "@/components/Container";
-import Hero from "@/components/Hero";
-import Newsletter from "@/components/Newsletter";
-import Photos from "@/components/Photos";
-import Resume from "@/components/Resume";
-import { ArticleWithSlug, getAllArticles } from "@/lib/article";
-import { formatDate } from "@/lib/formateDate";
+import Image from "next/image";
+import { Itim } from "next/font/google";
+const itim = Itim({ weight: ["400"], subsets: ["latin"] });
+import img from "../../public/e-store.svg";
+import Timer from "@/components/timer";
 
-const Article = ({ article }: { article: ArticleWithSlug }) => {
+export default function ComingSoon() {
   return (
-    <Card as="article">
-      <Card.Title href={`/articles/${article.slug}`}>
-        {article.title}
-      </Card.Title>
-      <Card.Eyebrow>{formatDate(article.date)}</Card.Eyebrow>
-      <Card.Description>{article.description}</Card.Description>
-      <Card.Cta>Read article</Card.Cta>
-    </Card>
-  );
-};
-
-export default async function Home() {
-  let articles = (await getAllArticles()).slice(0, 4);
-
-  return (
-    <main>
-      <Hero />
-      <Photos />
-      <Container className="mt-24 md:mt-28">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="flex flex-col gap-16">
-            {articles.map((article) => (
-              <Article key={article.slug} article={article} />
-            ))}
-          </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <Newsletter />
-            <Resume />
-          </div>
-        </div>
-      </Container>
+    <main className="container mx-auto h-screen flex justify-center items-center">
+      <section className="px-4 w-full flex flex-col lg:flex-row justify-between items-center">
+        <aside className="w-full lg:w-1/2 text-center lg:text-start">
+          <h1 className="text-6xl lg:text-7xl xl:text-8xl mb-5 text-black">
+            <small className="text-3xl font-semibold">Our Website is</small>
+            <br />
+            <span className={itim.className}>Coming Soon</span>
+          </h1>
+          <h2 className="text-black text-lg lg:text-xl">
+            We&apos;re{" "}
+            <span className="bg-white px-2 py-1 font-semibold rounded shadow-md">
+              Under Construction
+            </span>{" "}
+            will be here soon.
+          </h2>
+          <h3 className="bg-white text-black font-semibold text-xl lg:text-2xl uppercase px-2 py-1 inline-block rounded shadow-md mt-5">
+            Stay Tuned!
+          </h3>
+          <Timer launchDate="2024-11-08T20:00:00" />
+        </aside>
+        <aside className="w-full lg:w-1/2 flex justify-center mt-5 lg:mt-0 lg:pl-4">
+          <Image
+            src={img}
+            alt="E Store"
+            width={650}
+            height={450}
+            className="w-full max-w-[650px] h-auto"
+          />
+        </aside>
+      </section>
     </main>
   );
 }
